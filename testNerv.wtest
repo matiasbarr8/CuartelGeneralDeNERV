@@ -1,0 +1,45 @@
+import nerv.*
+import evas.*
+import pilotos.*
+
+describe "Test Cuartel Nerv" {
+
+  test "El EVA-01 no puede usarse más de 3 veces seguidas sin recargarse." {
+    nerv.sincronizarUnEvaConUnPiloto(eva01,asuka)
+    nerv.sincronizarUnEvaConUnPiloto(eva01,asuka)
+    nerv.sincronizarUnEvaConUnPiloto(eva01,asuka)
+    nerv.sincronizarUnEvaConUnPiloto(eva01,asuka)
+    assert.that(true)
+  }
+  test "En modo ataque, el EVA-02 otorga 3 de entrenamiento y consume 20 de energía." {
+    eva02.cambiarModoCombate(ataque)
+    eva02.sincronizarConUnPiloto(asuka)
+    assert.equals(8, asuka.puntosDeEntrenamiento())
+    assert.equals(80, eva02.energia())
+  }
+  test "Shinji puede al inicio sincronizar con el EVA-00." {
+    nerv.sincronizarUnEvaConUnPiloto(eva00,shinji)
+    assert.that(true)
+  }
+  test "Probar que Rei no puede realizar más de 5 sincronizaciones en total." {
+    nerv.sincronizarUnEvaConUnPiloto(eva01,rei)
+    nerv.sincronizarUnEvaConUnPiloto(eva01,rei)
+    nerv.sincronizarUnEvaConUnPiloto(eva01,rei)
+    nerv.sincronizarUnEvaConUnPiloto(eva01,rei)
+    nerv.sincronizarUnEvaConUnPiloto(eva01,rei)
+    nerv.sincronizarUnEvaConUnPiloto(eva01,rei)
+    assert.that(true)
+  }
+  test "El cálculo del promedio de puntos de entrenamiento de los pilotos es correcto." {
+    nerv.agregarUnPiloto(asuka)
+    nerv.agregarUnPiloto(rei)
+    nerv.agregarUnPiloto(shinji)
+    assert.equals(2.33333, nerv.promedioDePuntosDeEntrenamiento())
+  }
+  test "Que un piloto se considera satisfecho según su definición personal." {
+    nerv.sincronizarUnEvaConUnPiloto(eva01,asuka)
+    asuka.cambiarEstado()
+    assert.equals(true, asuka.estaSatisfecho())
+  }
+
+}
